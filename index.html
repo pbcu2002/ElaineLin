@@ -398,7 +398,7 @@ nav.scrolled {
 }
 .hero-tagline-row {
   position:relative; z-index:3;
-  display:flex; align-items:baseline; gap:0;
+  display:block;
   font-family:var(--font-body);
   font-size:clamp(18px,2.4vw,36px);
   font-weight:600;
@@ -408,11 +408,13 @@ nav.scrolled {
   margin-top:0;
   margin-bottom:0;
 }
-.hero-tagline-static { flex-shrink:0; margin-right:.38em; }
+.hero-tagline-static { display:block; margin-bottom:.1em; color:rgba(242,235,217,.55); font-size:.7em; letter-spacing:.12em; text-transform:uppercase; font-family:var(--font-mono); }
 .hero-cycler {
+  display:block;
   color:var(--rust-lt);
-  transition:opacity .3s;
-  white-space:nowrap;
+  transition:opacity .4s ease;
+  white-space:normal;
+  line-height:1.2;
 }
 .hero-ctas-row {
   display:flex; gap:10px; align-items:center;
@@ -1182,7 +1184,7 @@ footer {
   .hero-eyebrow { font-size:8px; letter-spacing:.12em; }
   /* 預防性：所有 hero 文字不截字 */
   .hero-left { overflow:visible; word-break:break-word; padding-top:clamp(72px,12vh,110px); }
-  .hero-tagline-row { flex-wrap:wrap }
+  .hero-tagline-row { display:block }
   /* 預防性：通用 padding 保護 */
   section, .cv-inner, .contact-layout { overflow-x:hidden }
 }
@@ -1744,16 +1746,42 @@ function goSlide(idx) {
 buildDots(); updateSlides();
 setInterval(() => goSlide((hcCur + 1) % CVIDS.length), 10000);
 
-/* CYCLER — English only */
+/* CYCLER — fade in/out only the rotating word */
 const CYCLE_EN = ['International Brands','Corporate Campaigns','Instagram Influencers','Event Highlights'];
+const CYCLE_ZH = ['國際品牌','企業形象','網紅社群','活動紀錄'];
+const CYCLER_STATIC_EN = 'Editing for';
+const CYCLER_STATIC_ZH = '剪輯類型';
 let ci = 0;
 const cycler = document.querySelector('.hero-cycler');
-function updateCycler() { if (cycler) cycler.textContent = CYCLE_EN[ci]; }
+const cyclerStatic = document.querySelector('.hero-tagline-static');
+function isZhActive() {
+  // check which intro slide is active (mobile fade) or just use track position
+  const track = document.getElementById('intro-track');
+  if (!track) return false;
+  const slides = track.querySelectorAll('.hero-intro-slide');
+  if (slides.length < 2) return false;
+  // mobile: check active class; desktop: check translateX
+  if (window.innerWidth < 768) {
+    return slides[1].classList.contains('active');
+  }
+  return false;
+}
+function updateCycler() {
+  if (!cycler) return;
+  const zh = isZhActive();
+  cycler.textContent = zh ? CYCLE_ZH[ci] : CYCLE_EN[ci];
+  if (cyclerStatic) cyclerStatic.textContent = zh ? CYCLER_STATIC_ZH : CYCLER_STATIC_EN;
+}
 updateCycler();
 setInterval(() => {
+  if (!cycler) return;
   cycler.style.opacity = '0';
-  setTimeout(() => { ci = (ci + 1) % CYCLE_EN.length; updateCycler(); cycler.style.opacity = '1'; }, 300);
-}, 2600);
+  setTimeout(() => {
+    ci = (ci + 1) % CYCLE_EN.length;
+    updateCycler();
+    cycler.style.opacity = '1';
+  }, 400);
+}, 2800);
 
 /* SCROLL REVEAL */
 const revObs = new IntersectionObserver(e => {
