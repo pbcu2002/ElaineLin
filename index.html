@@ -672,18 +672,18 @@ section { padding:clamp(80px,11vw,140px) clamp(20px,4vw,56px) }
   /* no aspect-ratio — stretches to match portrait height */
 }
 
-/* Row 3: 1 landscape (wide ~2x) + 2 portrait — same row height */
+/* Row 3: 1 landscape (16:9) + 1 portrait */
 .bento-row-3 {
-  align-items:stretch;
+  align-items:flex-start;
 }
 .bento-row-3 .bc-land {
-  flex:2 1 0;       /* 2 units wide */
+  flex:3 1 0;
+  aspect-ratio:16/9;
 }
 .bento-row-3 .bc-port {
-  flex:1 1 0;       /* 1 unit wide each */
+  flex:1 1 0;
   aspect-ratio:9/16;
 }
-/* Row 3 height anchor: landscape determines height */
 .bento-row-3 .bc-land-anchor {
   aspect-ratio:16/9;
 }
@@ -1427,10 +1427,9 @@ footer {
       <div class="bc bc-land" data-src="yt:O548XVioG5o"><div class="bc-media"><img src="https://img.youtube.com/vi/O548XVioG5o/maxresdefault.jpg" style="width:100%;height:100%;object-fit:cover" onerror="this.src=this.src.replace('maxresdefault','hqdefault')"></div><div class="bc-play"><div class="bc-play-inner">▶</div></div><div class="bc-info"><div class="bc-title">Vogue Taiwan｜<br>Haezee — Playlist of My Life</div><div class="bc-tag">Podcast / Long-form</div></div></div>
     </div>
 
-    <!-- Row 3: brand2_ID（橫）+ interview1_GMA（直）+ KOL2_rest（直） -->
+    <!-- Row 3: VR trailer（橫 16:9）+ Viral Video（直） -->
     <div class="bento-row bento-row-3">
       <div class="bc bc-land bc-land-anchor" data-src="yt:BGwFQYz4w3M"><div class="bc-media"><img src="https://img.youtube.com/vi/BGwFQYz4w3M/maxresdefault.jpg" style="width:100%;height:100%;object-fit:cover" onerror="this.src=this.src.replace('maxresdefault','hqdefault')"></div><div class="bc-play"><div class="bc-play-inner">▶</div></div><div class="bc-info"><div class="bc-title">VR Game Trailer｜<br>The Verge of Desire</div><div class="bc-tag">Brand Campaign Videos</div></div></div>
-      <div class="bc bc-port" data-src="yt:HrW6CHeFgxE"><div class="bc-media"><img src="https://img.youtube.com/vi/HrW6CHeFgxE/maxresdefault.jpg" style="width:100%;height:100%;object-fit:cover" onerror="this.src=this.src.replace('maxresdefault','hqdefault')"></div><div class="bc-play"><div class="bc-play-inner">▶</div></div><div class="bc-info"><div class="bc-title">Nancy Tsai｜<br>Greece Travel</div><div class="bc-tag">Viral Reels</div></div></div>
       <div class="bc bc-port" data-src="yt:co-2VYAOgQE"><div class="bc-media"><img src="https://img.youtube.com/vi/co-2VYAOgQE/maxresdefault.jpg" style="width:100%;height:100%;object-fit:cover" onerror="this.src=this.src.replace('maxresdefault','hqdefault')"></div><div class="bc-play"><div class="bc-play-inner">▶</div></div><div class="bc-info"><div class="bc-title">Nancy Tsai｜<br>Viral Video</div><div class="bc-tag">Viral Reels</div></div></div>
     </div>
 
