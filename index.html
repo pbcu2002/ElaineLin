@@ -1219,6 +1219,7 @@ footer {
 /* far: hidden (3-slot only) */
 .hc-slide.far { display:none; }
 .hc-slide video { width:100%; height:100%; object-fit:cover; pointer-events:none }
+.hc-slide img { width:100%; height:100%; object-fit:cover; pointer-events:none }
 .hc-dots {
   display:flex; align-items:center; gap:10px;
   margin-top:clamp(8px,1.2vh,16px);
@@ -1638,11 +1639,11 @@ window.addEventListener('scroll', () => {
 
 /* CAROUSEL — 5 slots, fixed order, brand1_dyson default */
 const ALL_VIDS = [
-  { src:'brand1_dyson.mp4',   label:'DYSON × BRAND',  tag:'Brand' },
-  { src:'KOL1_lego.mp4',      label:'LEGO × KOL',      tag:'KOL' },
-  { src:'interview4.mp4',     label:'INTERVIEW',        tag:'Interview' },
-  { src:'KOL2_greece.mp4',    label:'GREECE TRAVEL',    tag:'KOL' },
-  { src:'interview1_GMA.mp4', label:'GMA INTERVIEW',    tag:'Interview' },
+  { src:'yt:Ujw4so46ozw',     label:'DYSON × BRAND',   tag:'Brand' },
+  { src:'yt:co-2VYAOgQE',     label:'LEGO × KOL',      tag:'KOL' },
+  { src:'yt:LdZx2JZmlzs',     label:'INTERVIEW',        tag:'Interview' },
+  { src:'yt:HrW6CHeFgxE',     label:'GREECE TRAVEL',    tag:'KOL' },
+  { src:'yt:XPehxQVdxSk',     label:'GMA INTERVIEW',    tag:'Interview' },
 ];
 // Fixed order: brand1_dyson first (index 0 = active on load), no shuffle
 function shuffle(arr) {
@@ -1665,19 +1666,23 @@ const hcDots  = document.getElementById('hc-dots');
 
 const SLOT_CLS = ['far', 'side', 'active', 'side', 'far'];
 
-// Build 5 permanent slide nodes
+// Build 5 permanent slide nodes (using img for YouTube thumbnails)
 const slideNodes = SLOT_CLS.map((cls, pos) => {
   const slide = document.createElement('div');
   slide.className = 'hc-slide ' + cls;
-  const vid = document.createElement('video');
-  vid.autoplay = true; vid.muted = true; vid.loop = true; vid.playsInline = true;
-  slide.appendChild(vid);
+  const img = document.createElement('img');
+  img.alt = '';
+  slide.appendChild(img);
   hcTrack.appendChild(slide);
   return slide;
 });
 
+function getYtThumb(src) {
+  if (src.startsWith('yt:')) return `https://img.youtube.com/vi/${src.slice(3)}/hqdefault.jpg`;
+  return '';
+}
+
 function getSlotOrder(cur) {
-  // Returns array of 5 CVIDS indices for [far-l, side-l, active, side-r, far-r]
   const n = CVIDS.length;
   return [
     (cur - 2 + n) % n,
@@ -1693,21 +1698,13 @@ function updateSlides() {
   slideNodes.forEach((slide, pos) => {
     const idx = order[pos];
     const v = CVIDS[idx];
-    const vid = slide.querySelector('video');
-    // Only update src if it changed (avoid unnecessary reload)
-    if (vid.getAttribute('src') !== v.src) {
-      vid.src = v.src;
-      vid.play().catch(() => {});
-    }
+    const img = slide.querySelector('img');
+    const thumb = getYtThumb(v.src);
+    if (img.getAttribute('src') !== thumb) img.src = thumb;
     slide.className = 'hc-slide ' + SLOT_CLS[pos];
-    // Re-attach click listener by replacing the node's onclick
     slide.onclick = pos !== 2
       ? () => goSlide(idx)
-      : () => {
-          document.getElementById('lb-vid').src = v.src;
-          document.getElementById('lb').classList.add('on');
-          document.getElementById('lb-vid').play();
-        };
+      : () => openLb(v.src);
   });
   document.querySelectorAll('.hc-dot').forEach((d, i) => d.classList.toggle('active', i === hcCur));
 }
