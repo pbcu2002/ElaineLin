@@ -97,18 +97,22 @@ nav {
   z-index:200;
   display:flex; justify-content:space-between; align-items:center;
   padding:28px 48px;
-  /* hero state: frosted cream glass */
-  background:rgba(242,235,217,0.12);
-  backdrop-filter:blur(18px);
+  /* hero state: solid dark fallback for Safari backdrop-filter bug */
+  background:rgba(26,26,20,.72);
   -webkit-backdrop-filter:blur(18px);
+  backdrop-filter:blur(18px);
   border-bottom:1px solid rgba(242,235,217,.18);
-  transition:padding .3s, background .4s, backdrop-filter .4s, border-color .4s;
+  transition:padding .3s, background .4s, border-color .4s;
+  /* Safari: force GPU layer to fix backdrop-filter */
+  -webkit-transform:translateZ(0);
+  transform:translateZ(0);
+  will-change:transform;
 }
 nav.scrolled {
   padding:16px 48px;
   background:rgba(26,26,20,.96);
-  backdrop-filter:blur(0px);
   -webkit-backdrop-filter:blur(0px);
+  backdrop-filter:blur(0px);
   border-bottom:1px solid rgba(242,235,217,.06);
 }
 
