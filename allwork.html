@@ -205,6 +205,8 @@ nav {
 .aw-row.r-2land .aw-card.is-land { flex:1 1 0; aspect-ratio:16/9 }
 /* row-3port: 3 portrait equal */
 .aw-row.r-3port .aw-card { flex:1 1 0 }
+/* row-2port: 2 portrait, left-aligned like 4-col grid */
+.aw-row.r-2port .aw-card { flex:0 0 auto; width:calc(25% - 7.5px); aspect-ratio:9/16 }
 /* row-lone-port: orphan portrait(s), left-aligned */
 .aw-row.r-lone .aw-card {
   flex:0 0 auto;
@@ -463,57 +465,41 @@ function buildBentoRows(cards) {
     const c = remaining[2];
     const d = remaining[3];
 
-    if (!b) {
-      // only 1 card left — lone portrait or lone landscape
-      row.classList.add(a.orient === 'land' ? 'r-1land' : 'r-lone');
-      row.appendChild(a.card);
-      i += 1;
-    } else if (a.orient === 'port' && b.orient === 'port' && c && c.orient === 'port' && d && d.orient === 'port') {
-      // 4 portraits in a row
-      row.classList.add('r-4port');
-      row.appendChild(a.card); row.appendChild(b.card);
-      row.appendChild(c.card); row.appendChild(d.card);
-      i += 4;
-    } else if (a.orient === 'port' && b.orient === 'port' && c && c.orient === 'port') {
-      // 3 portraits
-      row.classList.add('r-3port');
-      row.appendChild(a.card); row.appendChild(b.card); row.appendChild(c.card);
-      i += 3;
-    } else if (a.orient === 'land' && b.orient === 'port' && c && c.orient === 'port') {
-      // landscape + 2 portrait
-      row.classList.add('r-land-2port');
-      row.appendChild(a.card); row.appendChild(b.card); row.appendChild(c.card);
-      i += 3;
-    } else if (a.orient === 'port' && b.orient === 'port' && c && c.orient === 'land') {
-      // 2 portrait + landscape
-      row.classList.add('r-2port-land');
-      row.appendChild(a.card); row.appendChild(b.card); row.appendChild(c.card);
-      i += 3;
-    } else if (a.orient === 'port' && b.orient === 'land') {
-      // portrait + landscape
-      row.classList.add('r-port-land');
-      row.appendChild(a.card); row.appendChild(b.card);
-      i += 2;
-    } else if (a.orient === 'land' && b.orient === 'port') {
-      // landscape + portrait
-      row.classList.add('r-land-port');
-      row.appendChild(a.card); row.appendChild(b.card);
-      i += 2;
-    } else if (a.orient === 'land' && b.orient === 'land') {
-      // 2 landscape
-      row.classList.add('r-2land');
-      row.appendChild(a.card); row.appendChild(b.card);
-      i += 2;
-    } else if (a.orient === 'port' && b.orient === 'port') {
-      // 2 portrait (fallback)
-      row.classList.add('r-lone');
-      row.appendChild(a.card); row.appendChild(b.card);
-      i += 2;
+    // STRICT SEPARATION: never mix landscape and portrait in the same row
+    if (a.orient === 'land') {
+      // Landscape: group consecutive land cards (max 2), always their own row
+      if (b && b.orient === 'land') {
+        row.classList.add('r-2land');
+        row.appendChild(a.card); row.appendChild(b.card);
+        i += 2;
+      } else {
+        row.classList.add('r-1land');
+        row.appendChild(a.card);
+        i += 1;
+      }
     } else {
-      // fallback: 1 card
-      row.classList.add(a.orient === 'land' ? 'r-1land' : 'r-lone');
-      row.appendChild(a.card);
-      i += 1;
+      // Portrait: group up to 4 consecutive port cards
+      const ports = [];
+      for (let j = 0; j < 4 && remaining[j] && remaining[j].orient === 'port'; j++) {
+        ports.push(remaining[j]);
+      }
+      if (ports.length === 4) {
+        row.classList.add('r-4port');
+        ports.forEach(p => row.appendChild(p.card));
+        i += 4;
+      } else if (ports.length === 3) {
+        row.classList.add('r-3port');
+        ports.forEach(p => row.appendChild(p.card));
+        i += 3;
+      } else if (ports.length === 2) {
+        row.classList.add('r-2port');
+        ports.forEach(p => row.appendChild(p.card));
+        i += 2;
+      } else {
+        row.classList.add('r-lone');
+        row.appendChild(a.card);
+        i += 1;
+      }
     }
 
     grid.appendChild(row);
