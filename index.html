@@ -672,9 +672,9 @@ section { padding:clamp(80px,11vw,140px) clamp(20px,4vw,56px) }
   /* no aspect-ratio — stretches to match portrait height */
 }
 
-/* Row 3: 1 landscape (16:9) + 1 portrait */
+/* Row 3: 1 landscape (16:9) + 1 portrait — align to landscape height */
 .bento-row-3 {
-  align-items:flex-start;
+  align-items:stretch;
 }
 .bento-row-3 .bc-land {
   flex:3 1 0;
@@ -682,7 +682,7 @@ section { padding:clamp(80px,11vw,140px) clamp(20px,4vw,56px) }
 }
 .bento-row-3 .bc-port {
   flex:1 1 0;
-  aspect-ratio:9/16;
+  /* no aspect-ratio: stretches to match landscape height */
 }
 .bento-row-3 .bc-land-anchor {
   aspect-ratio:16/9;
