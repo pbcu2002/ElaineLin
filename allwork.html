@@ -327,39 +327,39 @@ document.querySelectorAll('a, button').forEach(addCurHover);
 const VIDEOS = [
   // BRAND CAMPAIGN VIDEOS
   { src:'yt:BGwFQYz4w3M',         title:'VR Game Trailer｜The Verge of Desire',        cat:'brand' },
-  { src:'brand1_dyson.mp4',       title:'Dyson｜Modpoly Lifestyle Reels',              cat:'brand' },
+  { src:'yt:Ujw4so46ozw',         title:'Dyson｜Modpoly Lifestyle Reels',              cat:'brand' },
   { src:'yt:O548XVioG5o',         title:'Vogue Taiwan｜Haezee — Playlist of My Life',  cat:'longform' },
-  { src:'brand3_AP.mp4',          title:'Nancy Tsai｜Audemars Piguet in Hong Kong',    cat:'brand' },
-  { src:'brand3_apt.mp4',         title:'Unilever｜Lyrics Video Motion Design',        cat:'brand' },
-  { src:'brand4_tp.mp4',          title:'TalentPlus｜Quarterly Meeting Recap',         cat:'brand' },
+  { src:'yt:B9M_J20bYes',         title:'Nancy Tsai｜Audemars Piguet in Hong Kong',    cat:'brand' },
+  { src:'yt:L5Yc1Z9NJmk',         title:'Unilever｜Lyrics Video Motion Design',        cat:'brand' },
+  { src:'yt:hSUBJbDJNSI',         title:'TalentPlus｜Quarterly Meeting Recap',         cat:'brand' },
   // EVENT HIGHLIGHTS & INTERVIEWS
-  { src:'event1.mp4',             title:'Vogue Taiwan｜野餐日活動現場',                  cat:'event' },
-  { src:'event2.mp4',             title:'Vogue Taiwan｜野餐日回顧',                      cat:'event' },
-  { src:'interview1_GMA.mp4',     title:'Vogue Taiwan｜GMA Interview',                 cat:'event' },
-  { src:'interview2_gma.mp4',     title:'GQ Taiwan｜GMA Interview',                    cat:'event' },
-  { src:'interview3_jessica.mp4', title:'Vogue Taiwan｜Jessica Interview',             cat:'event' },
-  { src:'interview4.mp4',         title:'Vogue Taiwan｜Jolin Tsai Interview',          cat:'event' },
+  { src:'yt:sqGOaIMKW08',         title:'Vogue Taiwan｜野餐日活動現場',                  cat:'event' },
+  { src:'yt:eyfu8e4CC-U',         title:'Vogue Taiwan｜野餐日回顧',                      cat:'event' },
+  { src:'yt:XPehxQVdxSk',         title:'Vogue Taiwan｜GMA Interview',                 cat:'event' },
+  { src:'yt:6igwlDzZfHw',         title:'GQ Taiwan｜GMA Interview',                    cat:'event' },
+  { src:'yt:e_x4YzeoHnc',         title:'Vogue Taiwan｜Jessica Interview',             cat:'event' },
+  { src:'yt:LdZx2JZmlzs',         title:'Vogue Taiwan｜Jolin Tsai Interview',          cat:'event' },
   // VIRAL REELS (KOL + Unboxing)
-  { src:'KOL1_lego.mp4',          title:'Nancy Tsai｜Viral Video',                     cat:'viral' },
-  { src:'KOL2_greece.mp4',        title:'Nancy Tsai｜Greece Travel',                   cat:'viral' },
-  { src:'KOL2_rest.mp4',          title:'Nancy Tsai｜心潮仙宮',                          cat:'viral' },
-  { src:'KOL3_tp.mp4',            title:'TalentPlus｜徵才影音',                          cat:'viral' },
-  { src:'KOL5_redEnvelope.mp4',   title:'Nancy Tsai｜過年抽紅包',                        cat:'viral' },
-  { src:'brand2_ID.mp4',          title:'NTUT ID｜Image Video',                        cat:'brand' },
-  { src:'unbosing1.mp4',          title:'GQ Unboxing｜LOEWE',                          cat:'viral' },
-  { src:'unboxing2.mp4',          title:'GQ Unboxing｜%Arabica 象山店',                 cat:'viral' },
-  { src:'unboxing3.mp4',          title:'Vogue Unboxing｜Valentino',                   cat:'viral' },
-  { src:'unboxing4.mp4',          title:'GQ Unboxing｜Galaxy Z Fold5',                 cat:'viral' },
+  { src:'yt:co-2VYAOgQE',         title:'Nancy Tsai｜Viral Video',                     cat:'viral' },
+  { src:'yt:HrW6CHeFgxE',         title:'Nancy Tsai｜Greece Travel',                   cat:'viral' },
+  { src:'yt:yITjI_5acyE',         title:'Nancy Tsai｜心潮仙宮',                          cat:'viral' },
+  { src:'yt:5hK835WY034',         title:'TalentPlus｜徵才影音',                          cat:'viral' },
+  { src:'yt:M_UAqFuV5Bo',         title:'Nancy Tsai｜過年抽紅包',                        cat:'viral' },
+  { src:'yt:Y9VqZjf0EaM',         title:'NTUT ID｜Image Video',                        cat:'brand' },
+  { src:'yt:ycCAskrIKtI',         title:'GQ Unboxing｜LOEWE',                          cat:'viral' },
+  { src:'yt:a1MqHoXqrpQ',         title:'GQ Unboxing｜%Arabica 象山店',                 cat:'viral' },
+  { src:'yt:LSz-H4Az2BI',         title:'Vogue Unboxing｜Valentino',                   cat:'viral' },
+  { src:'yt:Q8JcQSzWJP8',         title:'GQ Unboxing｜Galaxy Z Fold5',                 cat:'viral' },
   // PODCAST / LONG-FORM
   { src:'yt:VKs6fq80tIM',         title:'Vogue Taiwan｜郭靜 — Playlist of My Life',     cat:'longform' },
-  { src:'podcast1_vicky.mp4',     title:'20 30 40 女人進行式｜S3 Ep14 (ft.Vicky老絲)',  cat:'longform' },
-  { src:'podcast2_camping.mov',   title:'20 30 40 女人進行式｜S3 Ep42 (ft.Ivy Chao)',  cat:'longform' },
-  { src:'podcast3_family.MOV',    title:'20 30 40 女人進行式｜S3 Ep52',                cat:'longform' },
-  { src:'podcast_allin.mp4',      title:'20 30 40 女人進行式｜S3 Ep47 (ft.ALL IN)',    cat:'longform' },
+  { src:'yt:LsIOxxBqsQQ',         title:'20 30 40 女人進行式｜S3 Ep14 (ft.Vicky老絲)',  cat:'longform' },
+  { src:'yt:2vFD9BPG5c0',         title:'20 30 40 女人進行式｜S3 Ep42 (ft.Ivy Chao)',  cat:'longform' },
+  { src:'yt:o9bV3OOHzCo',         title:'20 30 40 女人進行式｜S3 Ep52',                cat:'longform' },
+  { src:'yt:3_ZbQ2r4TVM',         title:'20 30 40 女人進行式｜S3 Ep47 (ft.ALL IN)',    cat:'longform' },
 ];
 
-// Brand tab has its own order: APT and ID swapped
-const BRAND_ORDER = ['brand1_dyson.mp4','brand3_apt.mp4','brand3_AP.mp4','brand2_ID.mp4','brand4_tp.mp4'];
+// Brand tab has its own order
+const BRAND_ORDER = ['yt:BGwFQYz4w3M','yt:Ujw4so46ozw','yt:L5Yc1Z9NJmk','yt:B9M_J20bYes','yt:Y9VqZjf0EaM','yt:hSUBJbDJNSI'];
 
 /* ── BUILD CARD ELEMENT ── */
 const lbEl = document.getElementById('lb');
@@ -370,6 +370,7 @@ function makeCard(v) {
   card.className = 'aw-card';
   card.dataset.cat = v.cat;
   card.dataset.src = v.src;
+  if (v.land) card.dataset.land = 'true';
   const CAT_LABELS = {
     viral:    'Viral Reels',
     brand:    'Brand Campaign Videos',
@@ -402,6 +403,12 @@ function makeCard(v) {
 /* ── DETECT ORIENTATION then resolve promise ── */
 function getOrientation(card) {
   return new Promise(resolve => {
+    // manually marked as landscape
+    if (card.dataset.land === 'true') {
+      card.classList.add('is-land');
+      resolve('land');
+      return;
+    }
     // YouTube cards: always landscape 16:9
     if (card.dataset.src.startsWith('yt:')) {
       card.classList.add('is-land');
