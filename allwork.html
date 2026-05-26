@@ -408,10 +408,11 @@ function getOrientation(card) {
       resolve('land');
       return;
     }
-    // YouTube cards: always landscape 16:9
+    // YouTube cards: landscape only if marked land:true, otherwise portrait
     if (card.dataset.src.startsWith('yt:')) {
-      card.classList.add('is-land');
-      resolve('land');
+      const orient = card.dataset.land === 'true' ? 'land' : 'port';
+      card.classList.add(orient === 'land' ? 'is-land' : 'is-port');
+      resolve(orient);
       return;
     }
     const vid = card.querySelector('video');
