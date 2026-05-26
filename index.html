@@ -999,9 +999,13 @@ section { padding:clamp(80px,11vw,140px) clamp(20px,4vw,56px) }
   border:1px solid rgba(26,26,20,.15);
 }
 .qz-x {
-  position:absolute; top:14px; right:18px;
+  position:absolute; top:8px; right:8px;
   background:none; border:none; font-family:var(--font-mono);
-  color:var(--muted); font-size:14px; cursor:pointer; transition:color .2s;
+  color:var(--muted); font-size:16px; cursor:pointer; transition:color .2s;
+  z-index:10; padding:16px; line-height:1;
+  touch-action:manipulation; -webkit-tap-highlight-color:transparent;
+  min-width:44px; min-height:44px;
+  display:flex; align-items:center; justify-content:center;
 }
 .qz-x:hover { color:var(--dark) }
 .qz-step { display:none } .qz-step.active { display:block }
@@ -1287,7 +1291,11 @@ footer {
 </div>
 
 <!-- ── LIGHTBOX ──────────────────────────────── -->
-<div id="lb"><span id="lb-x">✕</span><video id="lb-vid" controls></video></div>
+<div id="lb">
+  <span id="lb-x">✕</span>
+  <video id="lb-vid" controls></video>
+  <iframe id="lb-yt" style="display:none;width:90vw;max-width:1100px;aspect-ratio:16/9;border:none;border-radius:3px;" allowfullscreen allow="autoplay"></iframe>
+</div>
 
 <!-- ── NAV ───────────────────────────────────── -->
 <nav id="nav">
@@ -1418,7 +1426,7 @@ footer {
     <!-- Row 2: podcast1_vicky（直）+ long1（橫） -->
     <div class="bento-row bento-row-2">
       <div class="bc bc-port" data-src="podcast1_vicky.mp4"><div class="bc-media"><video src="podcast1_vicky.mp4" autoplay muted loop playsinline></video></div><div class="bc-play"><div class="bc-play-inner">▶</div></div><div class="bc-info"><div class="bc-title">20 30 40 女人進行式｜<br>S3 Ep14 (ft.Vicky老絲)</div><div class="bc-tag">Podcast / Long-form</div></div></div>
-      <div class="bc bc-land" data-src="long1.mp4"><div class="bc-media"><video src="long1.mp4" autoplay muted loop playsinline></video></div><div class="bc-play"><div class="bc-play-inner">▶</div></div><div class="bc-info"><div class="bc-title">Vogue Taiwan｜<br>Haezee — Playlist of My Life</div><div class="bc-tag">Podcast / Long-form</div></div></div>
+      <div class="bc bc-land" data-src="yt:O548XVioG5o"><div class="bc-media"><img src="https://img.youtube.com/vi/O548XVioG5o/hqdefault.jpg" style="width:100%;height:100%;object-fit:cover"></div><div class="bc-play"><div class="bc-play-inner">▶</div></div><div class="bc-info"><div class="bc-title">Vogue Taiwan｜<br>Haezee — Playlist of My Life</div><div class="bc-tag">Podcast / Long-form</div></div></div>
     </div>
 
     <!-- Row 3: brand2_ID（橫）+ interview1_GMA（直）+ KOL2_rest（直） -->
@@ -1767,14 +1775,35 @@ document.querySelectorAll('[data-target]').forEach(el => cntObs.observe(el));
 /* VIDEO ORIENTATION — removed; aspect-ratio is set manually per card via HTML class */
 
 /* LIGHTBOX */
-const lb = document.getElementById('lb'), lbVid = document.getElementById('lb-vid');
-document.getElementById('lb-x').addEventListener('click', () => { lb.classList.remove('on'); lbVid.pause(); lbVid.src = ''; });
-lb.addEventListener('click', e => { if (e.target === lb) { lb.classList.remove('on'); lbVid.pause(); lbVid.src = ''; } });
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { lb.classList.remove('on'); lbVid.pause(); lbVid.src = ''; closeQuiz(); }
-});
+const lb = document.getElementById('lb');
+const lbVid = document.getElementById('lb-vid');
+const lbYt = document.getElementById('lb-yt');
+
+function closeLb() {
+  lb.classList.remove('on');
+  lbVid.pause(); lbVid.src = '';
+  lbYt.src = ''; lbYt.style.display = 'none';
+  lbVid.style.display = '';
+}
+function openLb(src) {
+  if (src.startsWith('yt:')) {
+    const ytId = src.slice(3);
+    window.open(`https://youtu.be/${ytId}`, '_blank');
+    return;
+  } else {
+    lbYt.style.display = 'none';
+    lbVid.style.display = '';
+    lbVid.src = src;
+    lbVid.play();
+  }
+  lb.classList.add('on');
+}
+
+document.getElementById('lb-x').addEventListener('click', closeLb);
+lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeLb(); closeQuiz(); } });
 document.querySelectorAll('.bc').forEach(bc => {
-  bc.addEventListener('click', () => { const s = bc.dataset.src; if (!s) return; lbVid.src = s; lb.classList.add('on'); lbVid.play(); });
+  bc.addEventListener('click', () => { const s = bc.dataset.src; if (!s) return; openLb(s); });
 });
 
 /* REC WIDGET */

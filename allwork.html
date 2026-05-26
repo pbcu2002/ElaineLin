@@ -119,7 +119,7 @@ nav {
   padding:24px clamp(40px,6vw,96px);
   background:rgba(242,235,217,.6);
   backdrop-filter:blur(12px);
-  position:sticky; top:64px; z-index:100;
+  position:sticky; top:72px; z-index:100;
   border-bottom:1px solid rgba(61,74,46,.1);
 }
 .filter-btn {
@@ -259,7 +259,10 @@ nav {
 @media(max-width:900px) {
   nav { padding:18px 20px }
   .aw-header { padding:110px 20px 40px }
-  .filter-bar { padding:16px 20px; top:56px }
+  .filter-bar { padding:16px 20px; top:56px; transition:padding .3s, gap .3s; width:100%; box-sizing:border-box; }
+  .filter-bar.scrolled { padding:8px 12px; gap:5px; flex-wrap:nowrap; overflow-x:auto; width:100%; box-sizing:border-box; }
+  .filter-bar.scrolled::-webkit-scrollbar { display:none }
+  .filter-bar.scrolled .filter-btn { font-size:9px; padding:5px 10px; white-space:nowrap; flex-shrink:0; min-width:0; }
   .aw-count { padding:12px 20px }
   .aw-grid { padding:0 20px 80px }
   /* on mobile collapse multi-card rows to 2 cols */
@@ -276,7 +279,11 @@ nav {
 </head>
 <body>
 <div id="cur"></div>
-<div id="lb"><span id="lb-x">✕</span><video id="lb-vid" controls></video></div>
+<div id="lb">
+  <span id="lb-x">✕</span>
+  <video id="lb-vid" controls></video>
+  <iframe id="lb-yt" style="display:none;width:90vw;max-width:1100px;aspect-ratio:16/9;border:none;border-radius:3px;" allowfullscreen allow="autoplay"></iframe>
+</div>
 
 <nav>
   <a href="index.html" class="back-btn">← Back</a>
@@ -316,7 +323,7 @@ document.querySelectorAll('a, button').forEach(addCurHover);
 const VIDEOS = [
   // BRAND CAMPAIGN VIDEOS
   { src:'brand1_dyson.mp4',       title:'Dyson｜Modpoly Lifestyle Reels',              cat:'brand' },
-  { src:'long1.mp4',              title:'Vogue Taiwan｜Haezee — Playlist of My Life',  cat:'longform' },
+  { src:'yt:O548XVioG5o',         title:'Vogue Taiwan｜Haezee — Playlist of My Life',  cat:'longform' },
   { src:'brand3_AP.mp4',          title:'Nancy Tsai｜Audemars Piguet in Hong Kong',    cat:'brand' },
   { src:'brand3_apt.mp4',         title:'Unilever｜Lyrics Video Motion Design',        cat:'brand' },
   { src:'brand4_tp.mp4',          title:'TalentPlus｜Quarterly Meeting Recap',         cat:'brand' },
@@ -339,7 +346,7 @@ const VIDEOS = [
   { src:'unboxing3.mp4',          title:'Vogue Unboxing｜Valentino',                   cat:'viral' },
   { src:'unboxing4.mp4',          title:'GQ Unboxing｜Galaxy Z Fold5',                 cat:'viral' },
   // PODCAST / LONG-FORM
-  { src:'long2.mp4',              title:'Vogue Taiwan｜郭靜 — Playlist of My Life',     cat:'longform' },
+  { src:'yt:VKs6fq80tIM',         title:'Vogue Taiwan｜郭靜 — Playlist of My Life',     cat:'longform' },
   { src:'podcast1_vicky.mp4',     title:'20 30 40 女人進行式｜S3 Ep14 (ft.Vicky老絲)',  cat:'longform' },
   { src:'podcast2_camping.mov',   title:'20 30 40 女人進行式｜S3 Ep42 (ft.Ivy Chao)',  cat:'longform' },
   { src:'podcast3_family.MOV',    title:'20 30 40 女人進行式｜S3 Ep52',                cat:'longform' },
@@ -366,8 +373,13 @@ function makeCard(v) {
   };
   const catLabel = CAT_LABELS[v.cat] || v.cat;
   const titleHtml = v.title.replace('｜', '｜<br>');
+  const isYt = v.src.startsWith('yt:');
+  const ytId = isYt ? v.src.slice(3) : null;
+  const mediaHtml = isYt
+    ? `<img src="https://img.youtube.com/vi/${ytId}/hqdefault.jpg" style="width:100%;height:100%;object-fit:cover" loading="lazy">`
+    : `<video src="${v.src}" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover"></video>`;
   card.innerHTML = `
-    <video src="${v.src}" autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover"></video>
+    ${mediaHtml}
     <div class="aw-play"><div class="aw-play-btn">▶</div></div>
     <div class="aw-card-info">
       <div class="aw-card-title">${titleHtml}</div>
@@ -375,9 +387,7 @@ function makeCard(v) {
     </div>`;
   addCurHover(card);
   card.addEventListener('click', () => {
-    lbVid.src = v.src;
-    lbEl.classList.add('on');
-    lbVid.play();
+    openLb(v.src);
   });
   return card;
 }
@@ -385,7 +395,14 @@ function makeCard(v) {
 /* ── DETECT ORIENTATION then resolve promise ── */
 function getOrientation(card) {
   return new Promise(resolve => {
+    // YouTube cards: always landscape 16:9
+    if (card.dataset.src.startsWith('yt:')) {
+      card.classList.add('is-land');
+      resolve('land');
+      return;
+    }
     const vid = card.querySelector('video');
+    if (!vid) { card.classList.add('is-port'); resolve('port'); return; }
     function check() {
       if (vid.videoWidth) {
         const isLand = vid.videoWidth > vid.videoHeight;
@@ -504,7 +521,7 @@ function updateCount(n) {
   document.getElementById('aw-count').textContent = `Showing ${n} work${n !== 1 ? 's' : ''}`;
 }
 
-const LONGFORM_ORDER = ['long1.mp4','podcast1_vicky.mp4','podcast2_camping.mov','podcast3_family.MOV','podcast_allin.mp4','long2.mp4'];
+const LONGFORM_ORDER = ['yt:O548XVioG5o','podcast1_vicky.mp4','podcast2_camping.mov','podcast3_family.MOV','podcast_allin.mp4','yt:VKs6fq80tIM'];
 
 // Fixed bento layout for longform: row1 = land+port+port, row2 = port+port+land
 function buildLongformRows(cards) {
@@ -526,6 +543,23 @@ function buildLongformRows(cards) {
   [ordered[3], ordered[4], ordered[5]].filter(Boolean).forEach(c => row2.appendChild(c));
   grid.appendChild(row2);
 }
+
+/* ── FILTER BAR SCROLL COLLAPSE (mobile) ── */
+(function(){
+  const bar = document.querySelector('.filter-bar');
+  const nav = document.querySelector('nav');
+  // Set top dynamically to match nav height
+  function setTop() {
+    const h = nav.getBoundingClientRect().height;
+    bar.style.top = h + 'px';
+  }
+  setTop();
+  window.addEventListener('resize', setTop);
+  window.addEventListener('scroll', () => {
+    setTop();
+    bar.classList.toggle('scrolled', window.scrollY > 100);
+  }, { passive: true });
+})();
 
 document.querySelectorAll('.filter-btn').forEach(btn => {
   btn.addEventListener('click', () => {
@@ -551,9 +585,29 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
 });
 
 /* ── LIGHTBOX ── */
-document.getElementById('lb-x').addEventListener('click', () => { lbEl.classList.remove('on'); lbVid.pause(); lbVid.src = ''; });
-lbEl.addEventListener('click', e => { if (e.target === lbEl) { lbEl.classList.remove('on'); lbVid.pause(); lbVid.src = ''; } });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') { lbEl.classList.remove('on'); lbVid.pause(); lbVid.src = ''; } });
+const lbYt = document.getElementById('lb-yt');
+function closeLb() {
+  lbEl.classList.remove('on');
+  lbVid.pause(); lbVid.src = '';
+  lbYt.src = ''; lbYt.style.display = 'none';
+  lbVid.style.display = '';
+}
+function openLb(src) {
+  if (src.startsWith('yt:')) {
+    const ytId = src.slice(3);
+    window.open(`https://youtu.be/${ytId}`, '_blank');
+    return;
+  } else {
+    lbYt.style.display = 'none';
+    lbVid.style.display = '';
+    lbVid.src = src;
+    lbVid.play();
+  }
+  lbEl.classList.add('on');
+}
+document.getElementById('lb-x').addEventListener('click', closeLb);
+lbEl.addEventListener('click', e => { if (e.target === lbEl) closeLb(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
 </script>
 </body>
 </html>
