@@ -185,18 +185,22 @@ nav {
 .aw-row.r-4port .aw-card { flex:1 1 0 }
 /* row-1land: full-width landscape */
 .aw-row.r-1land .aw-card { flex:1 1 0; aspect-ratio:16/9 }
-/* row-port-land: 1 portrait + 1 landscape */
-.aw-row.r-port-land .aw-card.is-port { flex:1 1 0 }
-.aw-row.r-port-land .aw-card.is-land { flex:3 1 0; aspect-ratio:16/9 }
-/* row-land-port: 1 landscape + 1 portrait */
+/* row-port-land: 1 portrait + 1 landscape — portrait anchors height */
+.aw-row.r-port-land { align-items:flex-start }
+.aw-row.r-port-land .aw-card.is-port { flex:1 1 0; aspect-ratio:9/16 }
+.aw-row.r-port-land .aw-card.is-land { flex:3 1 0; aspect-ratio:unset; align-self:stretch }
+/* row-land-port: 1 landscape + 1 portrait — land anchors height */
+.aw-row.r-land-port { align-items:flex-start }
 .aw-row.r-land-port .aw-card.is-land { flex:3 1 0; aspect-ratio:16/9 }
-.aw-row.r-land-port .aw-card.is-port { flex:1 1 0 }
-/* row-land-2port: 1 landscape + 2 portrait */
+.aw-row.r-land-port .aw-card.is-port { flex:1 1 0; aspect-ratio:unset; align-self:stretch }
+/* row-land-2port: 1 landscape + 2 portrait — land anchors height */
+.aw-row.r-land-2port { align-items:flex-start }
 .aw-row.r-land-2port .aw-card.is-land { flex:2 1 0; aspect-ratio:16/9 }
-.aw-row.r-land-2port .aw-card.is-port { flex:1 1 0 }
-/* row-2port-land: 2 portrait + 1 landscape */
-.aw-row.r-2port-land .aw-card.is-port { flex:1 1 0 }
-.aw-row.r-2port-land .aw-card.is-land { flex:2 1 0; aspect-ratio:16/9 }
+.aw-row.r-land-2port .aw-card.is-port { flex:1 1 0; aspect-ratio:unset; align-self:stretch }
+/* row-2port-land: 2 portrait + 1 landscape — portraits anchor height */
+.aw-row.r-2port-land { align-items:flex-start }
+.aw-row.r-2port-land .aw-card.is-port { flex:1 1 0; aspect-ratio:9/16 }
+.aw-row.r-2port-land .aw-card.is-land { flex:2 1 0; aspect-ratio:unset; align-self:stretch }
 /* row-2land: 2 landscape side by side */
 .aw-row.r-2land .aw-card.is-land { flex:1 1 0; aspect-ratio:16/9 }
 /* row-3port: 3 portrait equal */
