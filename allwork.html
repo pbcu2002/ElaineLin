@@ -383,7 +383,7 @@ function makeCard(v) {
   const thumbName = isYt ? null : v.src.replace(/\.[^.]+$/, '').replace(/.*\//, '');
   const posterAttr = thumbName ? ` poster="pic/thumbs/${thumbName}.jpg"` : '';
   const mediaHtml = isYt
-    ? `<img src="https://img.youtube.com/vi/${ytId}/hqdefault.jpg" style="width:100%;height:100%;object-fit:cover" loading="lazy">`
+    ? `<img src="https://img.youtube.com/vi/${ytId}/maxresdefault.jpg" style="width:100%;height:100%;object-fit:cover" loading="lazy" onerror="this.src=this.src.replace('maxresdefault','hqdefault')">`
     : `<video src="${v.src}"${posterAttr} autoplay muted loop playsinline style="width:100%;height:100%;object-fit:cover"></video>`;
   card.innerHTML = `
     ${mediaHtml}
