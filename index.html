@@ -240,7 +240,7 @@ nav.scrolled {
    ════════════════════════════════════════════════ */
 #hero {
   height:100vh; height:100dvh;
-  background:var(--dark);
+  background:var(--cream);
   display:grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 100%;
@@ -275,8 +275,8 @@ nav.scrolled {
 #hero::before {
   content:''; position:absolute; inset:0; pointer-events:none; z-index:0;
   background-image:
-    linear-gradient(rgba(242,235,217,.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(242,235,217,.025) 1px, transparent 1px);
+    linear-gradient(rgba(61,74,46,.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(61,74,46,.06) 1px, transparent 1px);
   background-size:72px 72px;
 }
 
@@ -313,7 +313,7 @@ nav.scrolled {
   font-size:clamp(56px, min(12vw, 22vh), 200px);
   line-height:.88;
   letter-spacing:.06em;
-  color:var(--cream);
+  color:var(--dark);
   text-transform:uppercase;
   white-space:nowrap;
   display:block;
@@ -330,7 +330,7 @@ nav.scrolled {
   display:block;
   font-family:var(--font-mono);
   font-size:11px; letter-spacing:.2em; text-transform:uppercase;
-  color:rgba(242,235,217,.55);
+  color:rgba(26,26,20,.45);
   margin-top:clamp(4px,0.8vh,10px);
   margin-bottom:clamp(10px,1.8vh,22px);
 }
@@ -339,17 +339,17 @@ nav.scrolled {
 .hero-about-p {
   font-size:clamp(12px,1.1vw,15px);
   line-height:1.85;
-  color:rgba(242,235,217,.55);
+  color:rgba(26,26,20,.55);
   margin-bottom:10px;
   max-width:480px;
 }
-.hero-about-p strong { color:var(--cream); font-weight:500; }
+.hero-about-p strong { color:var(--dark); font-weight:500; }
 .hero-about-tags { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:clamp(10px,1.8vh,22px); }
 .hero-about-tag {
   font-family:var(--font-mono);
   font-size:8px; letter-spacing:.16em; text-transform:uppercase;
-  color:rgba(242,235,217,.45);
-  border:1px solid rgba(242,235,217,.15);
+  color:rgba(26,26,20,.45);
+  border:1px solid rgba(26,26,20,.18);
   padding:4px 10px; border-radius:2px;
 }
 
@@ -368,16 +368,16 @@ nav.scrolled {
   font-family:var(--font-body);
   font-size:clamp(12px,1.05vw,14px);
   line-height:1.85;
-  color:rgba(242,235,217,.6);
+  color:rgba(26,26,20,.58);
 }
-.hero-intro-slide strong { color:rgba(242,235,217,.9); font-weight:500; }
+.hero-intro-slide strong { color:var(--dark); font-weight:500; }
 
 /* ── BOTTOM ROW: CTAs ────────────────────────── */
 .hero-bottom-row {
   position:relative; z-index:3;
   display:flex; align-items:center; justify-content:flex-start;
   flex-wrap:wrap; gap:12px;
-  border-top:2px solid rgba(242,235,217,.25);
+  border-top:2px solid rgba(26,26,20,.15);
   padding-top:clamp(16px,2.5vh,28px);
   margin-top:clamp(12px,2vh,24px);
 }
@@ -385,7 +385,7 @@ nav.scrolled {
   font-family:var(--font-mono);
   font-size:clamp(9px,1vw,11px);
   letter-spacing:.22em; text-transform:uppercase;
-  color:rgba(242,235,217,.35);
+  color:rgba(26,26,20,.35);
 }
 .hero-tagline-row {
   position:relative; z-index:3;
@@ -394,12 +394,12 @@ nav.scrolled {
   font-size:clamp(18px,2.4vw,36px);
   font-weight:600;
   letter-spacing:.01em;
-  color:rgba(242,235,217,.30);
+  color:rgba(26,26,20,.30);
   white-space:nowrap;
   margin-top:0;
   margin-bottom:0;
 }
-.hero-tagline-static { display:block; margin-bottom:.1em; color:rgba(242,235,217,.55); font-size:.7em; letter-spacing:.12em; text-transform:uppercase; font-family:var(--font-mono); }
+.hero-tagline-static { display:block; margin-bottom:.1em; color:rgba(26,26,20,.50); font-size:.7em; letter-spacing:.12em; text-transform:uppercase; font-family:var(--font-mono); }
 .hero-cycler {
   display:block;
   color:var(--rust-lt);
@@ -427,13 +427,13 @@ nav.scrolled {
   font-family:var(--font-mono);
   font-size:9px; letter-spacing:.18em; text-transform:uppercase;
   padding:11px 22px; border-radius:1px;
-  background:var(--cream); color:var(--olive);
-  border:1px solid var(--cream);
+  background:var(--dark); color:var(--cream);
+  border:1px solid var(--dark);
   cursor:pointer;
   transition:background .2s, color .2s;
   display:inline-flex; align-items:center; gap:7px;
 }
-.btn-collab:hover { background:var(--cream2); border-color:var(--cream2); color:var(--olive) }
+.btn-collab:hover { background:var(--olive); border-color:var(--olive); color:var(--cream) }
 
 /* ── SCROLL CUE ──────────────────────────────── */
 .scroll-cue {
@@ -444,11 +444,11 @@ nav.scrolled {
 .scroll-cue span {
   font-family:var(--font-mono);
   font-size:7px; letter-spacing:.22em; text-transform:uppercase;
-  color:var(--cream); writing-mode:vertical-rl;
+  color:var(--dark); writing-mode:vertical-rl;
 }
 .sc-bar {
   width:1px; height:36px;
-  background:linear-gradient(to bottom,var(--cream),transparent);
+  background:linear-gradient(to bottom,var(--dark),transparent);
   animation:scBar 2.4s ease-in-out infinite;
 }
 @keyframes scBar {
@@ -1240,7 +1240,7 @@ footer {
 }
 .hc-dot {
   width:28px; height:3px; border-radius:2px;
-  background:rgba(242,235,217,.15); cursor:pointer;
+  background:rgba(26,26,20,.15); cursor:pointer;
   transition:background .35s ease, width .35s cubic-bezier(.22,1,.36,1);
 }
 .hc-dot.active {
@@ -1397,7 +1397,7 @@ footer {
     <svg viewBox="0 0 160 160" fill="none">
       <path id="sp" d="M80,80 m-60,0 a60,60 0 1,1 120,0 a60,60 0 1,1 -120,0" fill="none"/>
       <text font-family="Space Mono,monospace" font-size="10" font-weight="400"
-            fill="rgba(242,235,217,.22)" letter-spacing="6">
+            fill="rgba(26,26,20,.22)" letter-spacing="6">
         <textPath href="#sp">VIDEO EDITOR · @PBCU_ · TAIPEI · </textPath>
       </text>
       <circle cx="80" cy="80" r="3.5" fill="rgba(196,83,58,.45)"/>
