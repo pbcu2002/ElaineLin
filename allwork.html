@@ -253,12 +253,28 @@ nav {
 /* ── LIGHTBOX ── */
 #lb {
   position:fixed; inset:0;
-  background:rgba(26,26,20,.95);
+  background:rgba(26,26,20,.98);
   z-index:500; display:flex; align-items:center; justify-content:center;
   opacity:0; pointer-events:none; transition:opacity .3s;
 }
 #lb.on { opacity:1; pointer-events:auto }
 #lb video { max-width:90vw; max-height:85vh; border-radius:3px }
+#lb-yt {
+  border:none; border-radius:4px;
+  display:none;
+}
+#lb-yt.is-port {
+  display:block;
+  width: min(85vw, 85vh * 9 / 16);
+  height: min(85vh, 85vw * 16 / 9);
+  max-width: 420px;
+}
+#lb-yt.is-land {
+  display:block;
+  width: min(90vw, 85vh * 16 / 9);
+  height: min(85vh, 90vw * 9 / 16);
+  max-width: 1100px;
+}
 #lb-x {
   position:absolute; top:28px; right:36px;
   font-family:var(--font-mono); font-size:18px;
@@ -292,7 +308,7 @@ nav {
 <div id="lb">
   <span id="lb-x">✕</span>
   <video id="lb-vid" controls></video>
-  <iframe id="lb-yt" style="display:none;width:90vw;max-width:1100px;aspect-ratio:16/9;border:none;border-radius:3px;" allowfullscreen allow="autoplay"></iframe>
+  <iframe id="lb-yt" allowfullscreen allow="autoplay"></iframe>
 </div>
 
 <nav>
@@ -400,7 +416,7 @@ function makeCard(v) {
     </div>`;
   addCurHover(card);
   card.addEventListener('click', () => {
-    openLb(v.src);
+    openLb(v.src, v.land === true);
   });
   return card;
 }
@@ -589,19 +605,19 @@ const lbYt = document.getElementById('lb-yt');
 function closeLb() {
   lbEl.classList.remove('on');
   lbVid.pause(); lbVid.src = '';
-  lbYt.src = ''; lbYt.style.display = 'none';
+  lbYt.src = ''; lbYt.className = '';
   lbVid.style.display = '';
 }
-function openLb(src) {
+function openLb(src, isLand) {
   if (src.startsWith('yt:')) {
     const ytId = src.slice(3);
     lbVid.style.display = 'none';
     lbYt.src = `https://www.youtube.com/embed/${ytId}?autoplay=1`;
-    lbYt.style.display = 'block';
+    lbYt.className = isLand ? 'is-land' : 'is-port';
     lbEl.classList.add('on');
     return;
   } else {
-    lbYt.style.display = 'none';
+    lbYt.className = '';
     lbVid.style.display = '';
     lbVid.src = src;
     lbVid.play();

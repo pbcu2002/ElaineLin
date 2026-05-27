@@ -737,16 +737,29 @@ section { padding:clamp(80px,11vw,140px) clamp(20px,4vw,56px) }
 
 /* Lightbox */
 #lb {
-  position:fixed; inset:0; background:rgba(26,26,20,.95);
+  position:fixed; inset:0; background:rgba(26,26,20,.98);
   z-index:500; display:flex; align-items:center; justify-content:center;
   opacity:0; pointer-events:none; transition:opacity .3s;
 }
 #lb.on { opacity:1; pointer-events:auto }
 #lb video { max-width:90vw; max-height:85vh; border-radius:3px }
+#lb-yt.is-port {
+  width: min(85vw, 85vh * 9 / 16);
+  height: min(85vh, 85vw * 16 / 9);
+  max-width: 420px;
+}
+#lb-yt.is-land {
+  width: min(90vw, 85vh * 16 / 9);
+  height: min(85vh, 90vw * 9 / 16);
+  max-width: 1100px;
+}
 #lb-x {
   position:absolute; top:24px; right:32px;
   font-family:var(--font-mono); font-size:18px;
-  color:rgba(242,235,217,.35); cursor:pointer; transition:color .2s;
+  color:rgba(242,235,217,.55); cursor:pointer; transition:color .2s;
+  padding:8px; min-width:44px; min-height:44px;
+  display:flex; align-items:center; justify-content:center;
+  touch-action:manipulation;
 }
 #lb-x:hover { color:var(--cream) }
 
@@ -1292,7 +1305,7 @@ footer {
 <div id="lb">
   <span id="lb-x">✕</span>
   <video id="lb-vid" controls></video>
-  <iframe id="lb-yt" style="display:none;width:90vw;max-width:1100px;aspect-ratio:16/9;border:none;border-radius:3px;" allowfullscreen allow="autoplay"></iframe>
+  <iframe id="lb-yt" style="display:none;border:none;border-radius:3px;" allowfullscreen allow="autoplay"></iframe>
 </div>
 
 <!-- ── NAV ───────────────────────────────────── -->
@@ -1792,12 +1805,13 @@ function closeLb() {
   lbYt.src = ''; lbYt.style.display = 'none';
   lbVid.style.display = '';
 }
-function openLb(src) {
+function openLb(src, isLand) {
   if (src.startsWith('yt:')) {
     const ytId = src.slice(3);
     lbVid.style.display = 'none';
     lbYt.src = `https://www.youtube.com/embed/${ytId}?autoplay=1`;
     lbYt.style.display = 'block';
+    lbYt.className = isLand ? 'is-land' : 'is-port';
     lb.classList.add('on');
     return;
   } else {
@@ -1813,7 +1827,11 @@ document.getElementById('lb-x').addEventListener('click', closeLb);
 lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeLb(); closeQuiz(); } });
 document.querySelectorAll('.bc').forEach(bc => {
-  bc.addEventListener('click', () => { const s = bc.dataset.src; if (!s) return; openLb(s); });
+  bc.addEventListener('click', () => {
+    const s = bc.dataset.src; if (!s) return;
+    const isLand = bc.classList.contains('bc-land');
+    openLb(s, isLand);
+  });
 });
 
 /* REC WIDGET */
