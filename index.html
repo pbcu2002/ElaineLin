@@ -1184,12 +1184,12 @@ footer {
   /* Collab text */
   .collab-1 { font-size:clamp(40px,12vw,68px) }
   .collab-2 { font-size:clamp(44px,13vw,74px) }
-  /* Eyebrow */
-  .hero-eyebrow { font-size:8px; letter-spacing:.12em; }
+  /* Eyebrow — show on mobile, enough padding-top to clear nav */
+  .hero-eyebrow { display:flex; font-size:8px; letter-spacing:.12em; }
   /* 預防性：所有 hero 文字不截字 */
   .hero-left {
     overflow:visible; word-break:break-word;
-    padding-top:clamp(72px,12vh,110px);
+    padding-top:clamp(88px,14vh,120px);
     justify-content:center;
     padding-bottom:clamp(32px,6vh,64px);
   }
