@@ -557,7 +557,7 @@ function updateCount(n) {
   document.getElementById('aw-count').textContent = `Showing ${n} work${n !== 1 ? 's' : ''}`;
 }
 
-const LONGFORM_ORDER = ['yt:O548XVioG5o','podcast1_vicky.mp4','podcast2_camping.mov','podcast3_family.MOV','podcast_allin.mp4','yt:VKs6fq80tIM'];
+const LONGFORM_ORDER = ['yt:O548XVioG5o','yt:LsIOxxBqsQQ','yt:ejPpGbECN3M','yt:3_ZbQ2r4TVM','yt:o9bV3OOHzCo','yt:VKs6fq80tIM'];
 
 // Fixed bento layout for longform: row1 = land+port+port, row2 = port+port+land
 function buildLongformRows(cards) {
@@ -567,13 +567,13 @@ function buildLongformRows(cards) {
   cards.forEach(c => { bysrc[c.dataset.src] = c; });
   const ordered = LONGFORM_ORDER.map(s => bysrc[s]).filter(Boolean);
 
-  // Row 1: long1(land) + podcast1(port) + podcast2(port)
+  // Row 1: long1(land) + S3 Ep14(port) + S3 Ep42(port)
   const row1 = document.createElement('div');
   row1.className = 'aw-row r-land-2port';
   [ordered[0], ordered[1], ordered[2]].filter(Boolean).forEach(c => row1.appendChild(c));
   grid.appendChild(row1);
 
-  // Row 2: podcast3(port) + podcast_allin(port) + long2(land)
+  // Row 2: S3 Ep47(port) + S3 Ep52(port) + long2(land)
   const row2 = document.createElement('div');
   row2.className = 'aw-row r-2port-land';
   [ordered[3], ordered[4], ordered[5]].filter(Boolean).forEach(c => row2.appendChild(c));
