@@ -1,0 +1,29 @@
+# Local video source files — not referenced by the site (all videos are embedded via YouTube).
+# Kept locally for reference/re-editing, but not tracked in git to save LFS storage & bandwidth.
+KOL1_lego.mp4
+KOL2_greece.mp4
+KOL2_rest.mp4
+KOL3_tp.mp4
+KOL5_redEnvelope.mp4
+brand1_dyson.mp4
+brand2_ID.mp4
+brand3_AP.mp4
+brand3_apt.mp4
+brand4_tp.mp4
+event1.mp4
+event2.mp4
+interview1_GMA.mp4
+interview2_gma.mp4
+interview3_jessica.mp4
+interview4.mp4
+podcast1_vicky.mp4
+podcast2_camping.mov
+podcast3_family.MOV
+podcast_allin.mp4
+unbosing1.mp4
+unboxing2.mp4
+unboxing3.mp4
+unboxing4.mp4
+
+# macOS
+.DS_Store
